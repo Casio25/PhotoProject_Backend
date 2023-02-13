@@ -1,0 +1,23 @@
+{
+  "name": "photoproject_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Casio25/PhotoProject_Backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Casio25/PhotoProject_Backend/issues"
+  },
+  "homepage": "https://github.com/Casio25/PhotoProject_Backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}
