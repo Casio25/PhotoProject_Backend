@@ -88,7 +88,7 @@ http.createServer((req, res) =>{
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     const url = req.url;
-    if(url === "./data"){
+    if(url === "/data"){
         const photoData = fs.readFileSync("data.txt", "utf-8");
         res.end(photoData);
     }else if(photoData.status !== 200){
