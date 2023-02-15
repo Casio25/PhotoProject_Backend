@@ -5,6 +5,14 @@ const fs = require("fs");
 const countOfOffers = 25;
 const countOfComments = 25;
 const countOfAvatars = 6;
+const COMMENTIDSRANGE = {
+    MIN: 1,
+    MAX: 999,
+}
+const LIKESRANGE = {
+    MIN: 15,
+    MAX: 200,
+}
 const descriptions = ["Це літо було чудовим", "Фотка з минулого року",
     "Дуже сумую за цими емоціями", "Сподіваюсь, що я там не був лише один раз"];
 
@@ -60,7 +68,7 @@ function getOffer(index) {
         id: index + 1,
         url: `photos/${index + 1}.jpg`,
         description: getRandomDescription(),
-        likes: getRandomNumber(15, 200),
+        likes: getRandomNumber(LIKESRANGE.MIN, LIKESRANGE.MAX),
         comments: getComment(getRandomNumber(1, countOfComments))
     }
 }
@@ -71,7 +79,7 @@ function getComment(countOfComments,) {
     const ArrayOfComments = [];
     for (let i = 0; i < countOfComments; i++) {
         ArrayOfComments.push({
-            id: getRandomNumber(1, 999),
+            id: getRandomNumber(COMMENTIDSRANGE.MIN, COMMENTIDSRANGE.MAX),
             avatar: `img/avatar-${getRandomNumber(1, countOfAvatars)}.svg`,
             comment: comments[getRandomNumber(1, comments.length - 1)],
             name: names[getRandomNumber(1, names.length - 1)]
