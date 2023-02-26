@@ -91,15 +91,21 @@ function getComment(countOfComments,) {
 
 
 fs.writeFileSync("data.txt", JSON.stringify(data));
+fs.writeFileSync("comments.txt", JSON.stringify(commentArray));
 
 http.createServer((req, res) =>{
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     const url = req.url;
-    if(url === "/data"){
-        const photoData = fs.readFileSync("data.txt", "utf-8");
-        res.end(photoData);
-    }else if(photoData.status !== 200){
-        res.end("Cannot find photos")
+    if (req.method === "GET"){
+        if(url === "/data"){
+            const photoData = fs.readFileSync("data.txt", "utf-8");
+            res.end(photoData);
+        }else if(photoData.status !== 200){
+            res.end("Cannot find photos")
+        }
+    } else if (req.method === "POST"){
+        
     }
+
 }).listen(3000);
