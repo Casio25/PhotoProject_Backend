@@ -69,7 +69,11 @@ function getOffer(index) {
         url: `photos/${index + 1}.jpg`,
         description: getRandomDescription(),
         likes: getRandomNumber(LIKESRANGE.MIN, LIKESRANGE.MAX),
-        comments: getComment(getRandomNumber(1, countOfComments))
+        comments: getComment(getRandomNumber(1, countOfComments)),
+        filter: "none",
+        scale: 100,
+        hashtags: [],
+        description: ""
     }
 }
 
@@ -95,17 +99,35 @@ fs.writeFileSync("comments.txt", JSON.stringify(commentArray));
 
 http.createServer((req, res) =>{
     res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, UPDATE");
+    res.writeHead(200, { "Content-Type": "application/json" });
 
     const url = req.url;
-    if (req.method === "GET"){
-        if(url === "/data"){
+    let body = "";
+    
+    if (req.method === "POST"){
+        if (url === "/data") {
+            console.log("post");
+            req.on("data", (data) =>{
+                body += data.toString();
+            });
+            req.on("end", () => {
+                const newData = JSON.parse(body);
+                const dataUpdate = JSON.parse(fs.readFileSync("data.txt"));
+                dataUpdate.push(newData)
+                fs.writeFileSync("data.txt", JSON.stringify(dataUpdate));
+            });
+            res.write(JSON.stringify(fs.readFileSync("data.txt")));
+            res.end("POST check");
+
+        }
+    }else if (req.method === "GET") {
+        if (url === "/data") {
             const photoData = fs.readFileSync("data.txt", "utf-8");
             res.end(photoData);
-        }else if(photoData.status !== 200){
+        } else if (photoData.status !== 200) {
             res.end("Cannot find photos")
         }
-    } else if (req.method === "POST"){
-        
     }
-
 }).listen(3000);
+
